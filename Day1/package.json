@@ -1,0 +1,19 @@
+{
+    "name": "phase-2-Day-1-CLI",
+    "version": "1.0.0",
+    "description": "Starting Node.js, Building CLI",
+    "license": "ISC",
+    "author": "Christo",
+    "type": "module",
+    "main": "./bin/t1_index.js",
+    "scripts": {
+        "build":"tsc",
+        "watch":"tsc --watch",
+        "prepare": "npm run build",
+        "test": "echo \"Error: no test specified\" && exit 1"  
+    },
+    "keywords": ["CLI"],
+    "bin":{
+        "task1":"./bin/t1_index.js"
+    }
+}
