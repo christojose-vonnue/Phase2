@@ -1,43 +1,31 @@
-#! /usr/bin/env node
-
 import { availableMemory, memoryUsage } from 'node:process';
 import { styleText } from 'node:util';
-
-// console.log("SHEBANG : #!usr/bin/env_node");
-
-
-console.log(styleText(["yellow","bold"],"-----------------"));
-const args=process.argv
-if(args.length>=3){
-    const first_arg=args[2]
-    parameterLogic(first_arg)
-}
 
 export function parameterLogic(first_arg : string){
     switch (first_arg) {
         case "--version":
             console.log(styleText(["magenta","italic"],`Node version : ${process.version}`));
-            break;
+            return process.version
         case "--memory":
             console.log("Memory Usage object");
             console.log(memoryUsage());
             console.log("Memory Available (bytes) "+availableMemory());
-            break;
+            return availableMemory()
         case "--dir":
             console.log(styleText(["magenta","italic"],`pwd : ${process.cwd()}`));
-            break
+            return process.cwd()
         case "--OS":
             console.log(styleText(["magenta","italic"],`platform : ${process.platform}`));
-            break
+            return process.platform
         case "--environment":
             const isProduction = process.env.NODE_ENV === 'production';
             if (isProduction) {
-            console.log("Running in production mode. Secure settings enabled.");
+                console.log("Running in production mode. Secure settings enabled.");
+                return "Production mode"
             } else {
             console.log("Running in development mode.");
+            return "Development mode"
             }
-            break
-    break;
         default:
             console.error(styleText(["red","bold"],"Invalid argument"));
     console.log(`
@@ -52,4 +40,3 @@ export function parameterLogic(first_arg : string){
             break;
     }
 }
-
