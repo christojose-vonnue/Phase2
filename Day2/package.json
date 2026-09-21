@@ -1,0 +1,20 @@
+{
+  "name": "phase1-day2-task-manager-cli",
+  "version": "1.0.0",
+  "description": "A file-based Task Manager CLI, that can add, list, complete, delete and filter tasks.",
+  "main": "./bin/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "CLI"
+  ],
+  "bin": {
+    "task": "./bin/index.js"
+  },
+  "author": "Christo",
+  "license": "ISC"
+}

@@ -5,5 +5,5 @@
     "moduleResolution": "bundler",
     "types": ["node"],
 },
-"include":["bin/**/*"]
+"include":["bin/**/*","tests"]
 }
