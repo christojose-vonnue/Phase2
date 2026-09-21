@@ -3,8 +3,8 @@
 import { input, select } from "@inquirer/prompts";
 import { readFile, writeFile } from "node:fs/promises";
 import { styleText } from 'node:util';
-const filepath = "./task_log.json";
-async function updatejson(newTask) {
+export const filepath = "./task_log.json";
+export async function updatejson(newTask) {
     try {
         const rawData = await readFile(filepath, "utf-8");
         const data_arr = JSON.parse(rawData);
@@ -24,7 +24,7 @@ async function updatejson(newTask) {
         console.log(err);
     }
 }
-async function writetask(newTask) {
+export async function writetask(newTask) {
     try {
         const rawData = await readFile(filepath, "utf-8");
         // console.log(rawData);
@@ -36,15 +36,17 @@ async function writetask(newTask) {
         console.log(err);
     }
 }
-async function readjson() {
+export async function readjson(pathtest = filepath) {
     try {
-        const rawData = await readFile(filepath, "utf-8");
+        const rawData = await readFile(pathtest, "utf-8");
         const data_arr = JSON.parse(rawData);
         return data_arr;
     }
     catch (err) {
         console.log(styleText(["bgBlue", "bold"], "File initialized.. Try adding some tasks.."));
-        await fileinit();
+        if (pathtest == filepath) {
+            await fileinit(filepath);
+        }
     }
 }
 const args = process.argv;
@@ -78,7 +80,7 @@ switch (command) {
 }
 // updatejson()
 // Requirement : Handle malformed or missing data safely.
-async function add() {
+export async function add() {
     const names = await list();
     console.log(styleText(["bgWhite", "bold", "black"], "Please Enter a unique Task_Name"));
     const task_name = await input({
@@ -113,7 +115,7 @@ async function add() {
     };
     writetask(newTask);
 }
-async function list() {
+export async function list() {
     try {
         const data_arr = await readjson();
         if (!data_arr)
@@ -129,7 +131,7 @@ async function list() {
         console.log(error);
     }
 }
-async function complete() {
+export async function complete() {
     const data_arr = await readjson();
     if (!data_arr)
         return;
@@ -151,7 +153,7 @@ async function complete() {
     };
     updatejson(completeTask);
 }
-async function deletetask() {
+export async function deletetask() {
     const data_arr = await readjson();
     if (!data_arr)
         return;
@@ -172,7 +174,7 @@ async function deletetask() {
     });
     await writeFile(filepath, JSON.stringify(new_data_arr, null, 2), "utf-8");
 }
-async function filter() {
+export async function filter() {
     const data_arr = await readjson();
     if (!data_arr)
         return;
@@ -188,6 +190,6 @@ async function filter() {
     }
 }
 // Requirement : Recover gracefully when the file does not yet exist.
-async function fileinit() {
-    await writeFile(filepath, JSON.stringify([]), { flag: 'wx' });
+async function fileinit(path = filepath) {
+    await writeFile(path, JSON.stringify([]), { flag: 'wx' });
 }

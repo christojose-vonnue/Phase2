@@ -5,11 +5,11 @@ import { readFile,writeFile } from "node:fs/promises";
 import { styleText } from 'node:util';
 
 const filepath : string = "./task_log.json"
-type data = {
+export type data = {
     name:string,
     status:"Not-started"|"In-progress"|"Completed"
 } 
-async function updatejson(newTask : data) {
+export async function updatejson(newTask : data) {
 
     try{
         const rawData = await readFile(filepath,"utf-8")
@@ -30,7 +30,7 @@ async function updatejson(newTask : data) {
         console.log(err);
     }
 }
-async function writetask(newTask : data) {
+export async function writetask(newTask : data) {
 
     try{
         const rawData = await readFile(filepath,"utf-8")
@@ -44,15 +44,17 @@ async function writetask(newTask : data) {
     }
 }
 
-async function readjson() : Promise<data[] | undefined>{
+export async function readjson(pathtest = filepath) : Promise<data[] | undefined>{
     try{
-        const rawData=await readFile(filepath,"utf-8")
+        const rawData=await readFile(pathtest,"utf-8")
         const data_arr=JSON.parse(rawData)
         return data_arr
     }
     catch(err){
          console.log(styleText(["bgBlue","bold"],"File initialized.. Try adding some tasks.."));
-        await fileinit()
+         if(pathtest==filepath){
+             await fileinit(filepath)
+         }
     }
 }
 
@@ -124,7 +126,7 @@ async function add() {
     writetask(newTask)
 }
 
-async function list() {
+export async function list() {
     try {
         const data_arr=await readjson()
         if(!data_arr) return 
@@ -196,6 +198,6 @@ async function filter() {
     }
 }
 // Requirement : Recover gracefully when the file does not yet exist.
-async function fileinit() {
-    await writeFile(filepath, JSON.stringify([]), { flag: 'wx' });
+async function fileinit(path = filepath) {
+    await writeFile(path, JSON.stringify([]), { flag: 'wx' });
 }
