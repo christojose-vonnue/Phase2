@@ -24,7 +24,3 @@ Express.js is not used
 * `curl -X GET http://localhost:8000/tasksSS`
 
 
-## Limitaions
-
-* Proper Headers are not set
-* Except GET, Other methods does not respond in the client side with dynamic results
