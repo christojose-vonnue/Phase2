@@ -36,3 +36,10 @@ const task_name=await input({
 * `JSON.stringify(data_arr, null, 2)` : The parameters `null` and `2` Makes the json object 
 
 * `cannot execute: required file not found` : This error occured when my `shebang` path was wrong. It must be exactly `#! /usr/bin/env node`
+
+# Day3
+
+* `curl` commands :  Refer README of Day3
+* `POSTMAN` : Can also be used to verify the expected results
+*  Basic Implementation : https://www.youtube.com/watch?v=iOWWA9Xvobk&t=314s  and https://www.youtube.com/watch?v=RCEQhJ1I_JQ
+*  Refer : https://www.geeksforgeeks.org/node-js/node-js-web-server/
