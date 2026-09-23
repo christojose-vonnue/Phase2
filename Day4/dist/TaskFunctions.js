@@ -1,5 +1,5 @@
 import { log } from "node:console";
-import { readFile, writeFile } from "node:fs/promises";
+import { access, readFile, writeFile } from "node:fs/promises";
 import { styleText } from "node:util";
 const filepath = 'sample.json';
 export function isInValidData(obj) {
@@ -35,10 +35,10 @@ export async function read() {
         return ("FAILED GET METHOD");
     }
 }
-export async function readtask(url) {
+export async function readtask(taskid) {
     try {
         //call list
-        let taskid = url.slice(7);
+        // let taskid=url.slice(7) DIRECTLY PASSED PARAMS
         let content = await readFile(filepath, "utf-8");
         // console.log(content);
         let contentJSON = JSON.parse(content);
@@ -60,7 +60,7 @@ export async function writeTask(payload) {
     try {
         console.log("In writetask function ");
         console.log(payload);
-        let payloadjson = JSON.parse(payload);
+        let payloadjson = typeof payload == "object" ? payload : JSON.parse(payload);
         if (isInValidData(payloadjson)) {
             throw Error("Runtime type validation falied");
         }
@@ -89,7 +89,7 @@ export async function writeTask(payload) {
 export async function patchTask(payload) {
     try {
         // console.log(payload);
-        let payloadjson = JSON.parse(payload);
+        let payloadjson = typeof payload == "object" ? payload : JSON.parse(payload);
         if (isInValidData(payloadjson)) {
             throw Error("Runtime type validation falied");
         }
@@ -150,5 +150,21 @@ export async function deleteTask(payload) {
         }
         console.log(styleText(["bgRed", "bold"], `FAILED DELETE`));
         return `FAILED DELETE`;
+    }
+}
+export async function testHealth() {
+    try {
+        await access(filepath);
+        console.log(styleText(["bgGreen", "bold"], `HEALH OK`));
+        const health = { "health": "up" };
+        return JSON.stringify(health, null, 2);
+    }
+    catch (err) {
+        if (err instanceof Error) {
+            log(err.message);
+        }
+        console.log(styleText(["bgRed", "bold"], `HEALH DOWN`));
+        const health = { "health": "down" };
+        return JSON.stringify(health, null, 2);
     }
 }

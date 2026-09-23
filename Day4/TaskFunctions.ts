@@ -1,5 +1,5 @@
 import { log } from "node:console";
-import { readFile, writeFile } from "node:fs/promises";
+import { access, readFile, writeFile } from "node:fs/promises";
 import { styleText } from "node:util";
 
 type data = {
@@ -45,10 +45,10 @@ export async function read(){
       }
 }
 
-export async function readtask(url:string) {
+export async function readtask(taskid:string) {
         try{
         //call list
-        let taskid=url.slice(7)
+        // let taskid=url.slice(7) DIRECTLY PASSED PARAMS
         let content=await readFile(filepath,"utf-8")
         // console.log(content);
         let contentJSON :data[] = JSON.parse(content)
@@ -72,8 +72,7 @@ export async function writeTask(payload : string){
     try{
         console.log("In writetask function ");
         console.log(payload);
-
-        let payloadjson : data = JSON.parse(payload)
+        let payloadjson : data = typeof payload== "object" ? payload :  JSON.parse(payload)
         if (isInValidData(payloadjson)){
             throw Error("Runtime type validation falied")
         }
@@ -106,7 +105,7 @@ export async function patchTask(payload : string){
     try{
             // console.log(payload);
 
-            let payloadjson : data = JSON.parse(payload)
+            let payloadjson : data = typeof payload== "object" ? payload :  JSON.parse(payload)
             if (isInValidData(payloadjson)){
                 throw Error("Runtime type validation falied")
             }
@@ -174,3 +173,23 @@ export async function deleteTask(payload:string) {
         return `FAILED DELETE`
     }
 }
+
+export async function testHealth() : Promise<string> {
+    try{
+        await access(filepath)
+        console.log(styleText(["bgGreen","bold"],`HEALH OK`));
+        const health:object={"health":"up"}
+        return JSON.stringify(health,null,2)
+    }catch(err){
+        if(err instanceof Error){
+            log(err.message)
+        }
+        console.log(styleText(["bgRed", "bold"], `HEALH DOWN`));
+        const health : healthType= { "health": "down" };
+        return JSON.stringify(health, null, 2);
+    }
+}
+export type healthType={
+    "health":"up"|"down"
+}
+

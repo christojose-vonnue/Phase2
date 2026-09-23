@@ -43,3 +43,33 @@ const task_name=await input({
 * `POSTMAN` : Can also be used to verify the expected results
 *  Basic Implementation : https://www.youtube.com/watch?v=iOWWA9Xvobk&t=314s  and https://www.youtube.com/watch?v=RCEQhJ1I_JQ
 *  Refer : https://www.geeksforgeeks.org/node-js/node-js-web-server/
+
+# Day4
+
+* ` npm install express` : To install express
+* Express is written in JavaScript and does not bundle its own type definitions. To use it with TypeScript, install TypeScript together with the community-maintained types for Express and Node.js (from DefinitelyTyped) as development dependencies:
+* `npm install --save-dev typescript @types/express @types/node`
+* `app.METHOD(PATH, HANDLER);` where HANDLER is the function executed when the route is matched.
+*  `app.use(function_which_returns_middleware)` can be used to run middlewares
+
+*  **Demo : Custom Middlewares , 3 Parameters, run next() or throw error**
+
+```typescript
+const logRequest= async function (req:Request,res:Response,next:NextFunction) {
+    log(styleText(["bgMagenta", "bold"],`Request id      : ${id}`))
+    log(styleText(["bgMagenta", "bold"],`Request path    : ${req.path}`))
+    log(styleText(["bgMagenta", "bold"],`Request method  : ${req.method}`))
+    id++
+    return next()
+}
+app.use(logRequest)
+app.use(express.json).. In built middlewares
+```
+
+* **Demo : Custom Error Handling Middlewares**
+
+```typescript
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(400).send(err.message);
+});
+```

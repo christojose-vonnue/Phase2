@@ -5,8 +5,8 @@ Express.js is not used
 
 # How to use
 
-1. Click on this link : https://vscode.dev/github/christojose-vonnue/Phase2/tree/master/Day1
-2. Download the folder Day1
+1. Click on this link : https://vscode.dev/github/christojose-vonnue/Phase2/tree/master/Day3
+2. Download the folder Day3
 3. Run these following commands in your terminal to set up node modules
 4. Run `npm --version` , if a valid version number exist, follow next step
 5. Run `npm install -D @types/node@^26.6.2 typescript@^7.0.2 vitest@^5.0.1` to download dependencies 
