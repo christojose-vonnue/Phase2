@@ -1,0 +1,23 @@
+[
+  {
+    "title": "AC Complaint",
+    "description": "AC is Complaint , Fix Fast",
+    "status": "open",
+    "priority": "high",
+    "assigne": "Jacob"
+  },
+  {
+    "title": "Fan Complaint",
+    "description": "High noise",
+    "status": "closed",
+    "priority": "high",
+    "assigne": "Jude"
+  },
+  {
+    "title": "Check2",
+    "description": "AC is Complaint , Fix Fast",
+    "status": "open",
+    "priority": "high",
+    "assigne": "Jacob"
+  }
+]

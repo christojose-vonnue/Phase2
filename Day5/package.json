@@ -1,0 +1,17 @@
+{
+  "name": "phase-2-day5-ticket",
+  "version": "1.0.0",
+  "description": "Create, list, view, update status, assign and delete tickets.",
+  "main": "app.ts",
+  "scripts": {
+    "build":"tsc",
+    "watch":"tsc --watch",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "API",
+    "Express"
+  ],
+  "author": "Christo",
+  "license": "ISC"
+}
