@@ -174,3 +174,41 @@ Previous connection kept
 **conditions** : Must be included in parenthesis
 
 ### IN BETWEEN is wrong format
+
+# Day7
+
+### Trigger and Function
+
+```sql
+CREATE FUNCTION status_update_fn()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO status_history
+    VALUES (DEFAULT,OLD.ticket_id,OLD.curr_status,NEW.curr_status);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_after_status_update
+AFTER UPDATE OF curr_status ON ticket
+FOR EACH ROW
+WHEN (OLD.curr_status IS DISTINCT FROM NEW.curr_status)
+EXECUTE FUNCTION status_update_fn()
+```
+
+**TRIGGER common syntax**<br>
+CREATE TRIGGER -> DEFINE WHEN TO TRIGGER -> EXECUTE function name<br>
+
+**FUNCTION common syntax**<br>
+
+CREATE FUNCTION fn_name -> RETURNS TRIGGER AS -> $$ ---code-block--- $$  -> LANGUAGE plpgsql;<br>
+
+`code-block` : contains the query want to execute<br>
+`NEW` : The updated table, so NEW.columname returns NEW value<br>
+`OLD` : The table before updated<br>
+THE `OLD` and `NEW` is the table referenced in the trigger conditions.<br> 
+
+### ALTER CONDITIONS
+
+Examples can be seen in Day7/delete.sql
